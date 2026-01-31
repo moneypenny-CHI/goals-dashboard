@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ben's Goals Dashboard</title>
+    <style>
+        :root {
+            --bg: #0d1117;
+            --card-bg: #161b22;
+            --border: #30363d;
+            --text: #c9d1d9;
+            --text-muted: #8b949e;
+            --accent: #58a6ff;
+            --green: #3fb950;
+            --yellow: #d29922;
+            --blue: #58a6ff;
+            --red: #f85149;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            padding: 2rem;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        header {
+            margin-bottom: 2rem;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 1rem;
+        }
+        
+        h1 {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        
+        .last-updated {
+            color: var(--text-muted);
+            font-size: 0.875rem;
+        }
+        
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1.5rem;
+        }
+        
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+        
+        .card h2 {
+            font-size: 1.25rem;
+            font-weight: 600;
+        }
+        
+        .status {
+            padding: 0.25rem 0.75rem;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            text-transform: uppercase;
+        }
+        
+        .status.active { background: rgba(63, 185, 80, 0.2); color: var(--green); }
+        .status.progress { background: rgba(210, 153, 34, 0.2); color: var(--yellow); }
+        .status.planning { background: rgba(88, 166, 255, 0.2); color: var(--blue); }
+        
+        .priority {
+            color: var(--text-muted);
+            font-size: 0.875rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .objective {
+            margin-bottom: 1rem;
+            color: var(--text-muted);
+            font-style: italic;
+        }
+        
+        .next-action {
+            background: rgba(88, 166, 255, 0.1);
+            border-left: 3px solid var(--accent);
+            padding: 0.75rem 1rem;
+            margin-top: 1rem;
+            border-radius: 0 4px 4px 0;
+        }
+        
+        .next-action-label {
+            font-size: 0.75rem;
+            color: var(--accent);
+            text-transform: uppercase;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+        
+        .tasks {
+            list-style: none;
+        }
+        
+        .tasks li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .tasks li:last-child {
+            border-bottom: none;
+        }
+        
+        .checkbox {
+            width: 16px;
+            height: 16px;
+            border: 2px solid var(--border);
+            border-radius: 3px;
+            flex-shrink: 0;
+        }
+        
+        .checkbox.done {
+            background: var(--green);
+            border-color: var(--green);
+        }
+        
+        .summary {
+            margin-top: 2rem;
+        }
+        
+        .summary h2 {
+            margin-bottom: 1rem;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        th, td {
+            text-align: left;
+            padding: 0.75rem;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        th {
+            color: var(--text-muted);
+            font-weight: 500;
+            font-size: 0.875rem;
+        }
+        
+        .model-routing {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+        }
+        
+        .model-routing h2 {
+            margin-bottom: 1rem;
+        }
+        
+        .model-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+        
+        .model-card {
+            padding: 1rem;
+            background: var(--bg);
+            border-radius: 6px;
+            text-align: center;
+        }
+        
+        .model-emoji {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .model-name {
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+        
+        .model-use {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🎯 Ben's Goals Dashboard</h1>
+            <p class="last-updated">Last updated: January 31, 2026</p>
+        </header>
+        
+        <div class="grid">
+            <div class="card">
+                <div class="card-header">
+                    <h2>VNTANA Growth & GTM</h2>
+                    <span class="status active">Active</span>
+                </div>
+                <p class="priority">Priority: High</p>
+                <p class="objective">Scale VNTANA's go-to-market with AI-powered workflows</p>
+                <ul class="tasks">
+                    <li><span class="checkbox"></span> SAM scoring algorithm</li>
+                    <li><span class="checkbox"></span> AI competitor comparison pages</li>
+                    <li><span class="checkbox"></span> Closed-lost re-engagement</li>
+                    <li><span class="checkbox"></span> Competitive intelligence BattleBot</li>
+                    <li><span class="checkbox"></span> n8n workflow integration</li>
+                </ul>
+                <div class="next-action">
+                    <div class="next-action-label">Next Action</div>
+                    Review GTM playbooks and prioritize one initiative
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <h2>ClinicalSim.ai</h2>
+                    <span class="status progress">In Progress</span>
+                </div>
+                <p class="priority">Priority: High</p>
+                <p class="objective">Launch medical AI simulation tool for physician training</p>
+                <ul class="tasks">
+                    <li><span class="checkbox done"></span> MVP built</li>
+                    <li><span class="checkbox done"></span> U of Chicago pilot</li>
+                    <li><span class="checkbox done"></span> Advocate Children's pilot</li>
+                    <li><span class="checkbox"></span> IPSSW Conference (Munich)</li>
+                    <li><span class="checkbox"></span> Iterate on pilot feedback</li>
+                </ul>
+                <div class="next-action">
+                    <div class="next-action-label">Next Action</div>
+                    Check in with Dr. Gillian Brennan on pilot progress
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <h2>Home Improvement</h2>
+                    <span class="status progress">In Progress</span>
+                </div>
+                <p class="priority">Priority: Medium</p>
+                <p class="objective">Complete ongoing home projects</p>
+                <ul class="tasks">
+                    <li><span class="checkbox"></span> Review Todoist project list</li>
+                    <li><span class="checkbox"></span> Prioritize by impact/effort</li>
+                </ul>
+                <div class="next-action">
+                    <div class="next-action-label">Next Action</div>
+                    Pull Todoist items and create prioritized list
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <h2>Life Admin</h2>
+                    <span class="status active">Active</span>
+                </div>
+                <p class="priority">Priority: Medium</p>
+                <p class="objective">Stay on top of recurring life admin</p>
+                <ul class="tasks">
+                    <li><span class="checkbox done"></span> Moneypenny cron jobs running</li>
+                    <li><span class="checkbox done"></span> Weekly recipes automation</li>
+                    <li><span class="checkbox done"></span> Date night planning</li>
+                    <li><span class="checkbox"></span> Replace Zapier with local crons</li>
+                </ul>
+                <div class="next-action">
+                    <div class="next-action-label">Next Action</div>
+                    Audit Zapier workflows for migration
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <h2>DR Family Trip</h2>
+                    <span class="status planning">Planning</span>
+                </div>
+                <p class="priority">Priority: High</p>
+                <p class="objective">Plan Dominican Republic family vacation</p>
+                <ul class="tasks">
+                    <li><span class="checkbox"></span> Finalize dates</li>
+                    <li><span class="checkbox"></span> Book flights (AA/OneWorld)</li>
+                    <li><span class="checkbox"></span> Arrange accommodations</li>
+                    <li><span class="checkbox"></span> Plan kid-friendly activities</li>
+                </ul>
+                <div class="next-action">
+                    <div class="next-action-label">Next Action</div>
+                    Confirm trip dates with Lauren
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <h2>Home Decor</h2>
+                    <span class="status planning">Planning</span>
+                </div>
+                <p class="priority">Priority: Low</p>
+                <p class="objective">Improve home aesthetics</p>
+                <ul class="tasks">
+                    <li><span class="checkbox"></span> Review Todoist items</li>
+                    <li><span class="checkbox"></span> Assess scope</li>
+                </ul>
+                <div class="next-action">
+                    <div class="next-action-label">Next Action</div>
+                    Pull Todoist items and prioritize
+                </div>
+            </div>
+        </div>
+        
+        <div class="model-routing">
+            <h2>🧠 Brain + Muscles Model Routing</h2>
+            <div class="model-grid">
+                <div class="model-card">
+                    <div class="model-emoji">🧠</div>
+                    <div class="model-name">Opus 4.5</div>
+                    <div class="model-use">Brain: Orchestration, reasoning, decisions</div>
+                </div>
+                <div class="model-card">
+                    <div class="model-emoji">💻</div>
+                    <div class="model-name">CodeX 5.2</div>
+                    <div class="model-use">Coder: All coding tasks</div>
+                </div>
+                <div class="model-card">
+                    <div class="model-emoji">🔍</div>
+                    <div class="model-name">Gemini</div>
+                    <div class="model-use">Researcher: Web research</div>
+                </div>
+                <div class="model-card">
+                    <div class="model-emoji">🐦</div>
+                    <div class="model-name">Grok</div>
+                    <div class="model-use">Social: Twitter/X research</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="summary">
+            <h2>📊 Health Summary</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Goal</th>
+                        <th>Status</th>
+                        <th>Last Activity</th>
+                        <th>Blockers</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>VNTANA GTM</td>
+                        <td><span class="status active">Active</span></td>
+                        <td>2026-01-30</td>
+                        <td>None</td>
+                    </tr>
+                    <tr>
+                        <td>ClinicalSim.ai</td>
+                        <td><span class="status progress">In Progress</span></td>
+                        <td>—</td>
+                        <td>Awaiting pilot feedback</td>
+                    </tr>
+                    <tr>
+                        <td>Home Improvement</td>
+                        <td><span class="status progress">In Progress</span></td>
+                        <td>—</td>
+                        <td>Need prioritization</td>
+                    </tr>
+                    <tr>
+                        <td>Life Admin</td>
+                        <td><span class="status active">Active</span></td>
+                        <td>2026-01-31</td>
+                        <td>None</td>
+                    </tr>
+                    <tr>
+                        <td>DR Trip</td>
+                        <td><span class="status planning">Planning</span></td>
+                        <td>—</td>
+                        <td>Need dates</td>
+                    </tr>
+                    <tr>
+                        <td>Home Decor</td>
+                        <td><span class="status planning">Planning</span></td>
+                        <td>—</td>
+                        <td>Low priority</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>

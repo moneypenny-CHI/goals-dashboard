@@ -1,0 +1,105 @@
+{
+  "lastUpdated": "2026-01-31",
+  "goals": [
+    {
+      "id": "vntana",
+      "title": "VNTANA Growth & GTM",
+      "status": "active",
+      "priority": "high",
+      "objective": "Scale VNTANA's go-to-market with AI-powered workflows",
+      "tasks": [
+        { "text": "SAM scoring algorithm", "done": false },
+        { "text": "AI competitor comparison pages", "done": false },
+        { "text": "Closed-lost re-engagement", "done": false },
+        { "text": "Competitive intelligence BattleBot", "done": false },
+        { "text": "n8n workflow integration", "done": false }
+      ],
+      "nextAction": "Review GTM playbooks and prioritize one initiative",
+      "lastActivity": "2026-01-30",
+      "blockers": null
+    },
+    {
+      "id": "clinicalsim",
+      "title": "ClinicalSim.ai",
+      "status": "progress",
+      "priority": "high",
+      "objective": "Launch medical AI simulation tool for physician training",
+      "tasks": [
+        { "text": "MVP built", "done": true },
+        { "text": "U of Chicago pilot", "done": true },
+        { "text": "Advocate Children's pilot", "done": true },
+        { "text": "IPSSW Conference (Munich)", "done": false },
+        { "text": "Iterate on pilot feedback", "done": false }
+      ],
+      "nextAction": "Check in with Dr. Gillian Brennan on pilot progress",
+      "lastActivity": null,
+      "blockers": "Awaiting pilot feedback"
+    },
+    {
+      "id": "home-improvement",
+      "title": "Home Improvement",
+      "status": "progress",
+      "priority": "medium",
+      "objective": "Complete ongoing home projects",
+      "tasks": [
+        { "text": "Review Todoist project list", "done": false },
+        { "text": "Prioritize by impact/effort", "done": false }
+      ],
+      "nextAction": "Pull Todoist items and create prioritized list",
+      "lastActivity": null,
+      "blockers": "Need prioritization"
+    },
+    {
+      "id": "life-admin",
+      "title": "Life Admin",
+      "status": "active",
+      "priority": "medium",
+      "objective": "Stay on top of recurring life admin",
+      "tasks": [
+        { "text": "Moneypenny cron jobs running", "done": true },
+        { "text": "Weekly recipes automation", "done": true },
+        { "text": "Date night planning", "done": true },
+        { "text": "Replace Zapier with local crons", "done": false }
+      ],
+      "nextAction": "Audit Zapier workflows for migration",
+      "lastActivity": "2026-01-31",
+      "blockers": null
+    },
+    {
+      "id": "dr-trip",
+      "title": "DR Family Trip",
+      "status": "planning",
+      "priority": "high",
+      "objective": "Plan Dominican Republic family vacation",
+      "tasks": [
+        { "text": "Finalize dates", "done": false },
+        { "text": "Book flights (AA/OneWorld)", "done": false },
+        { "text": "Arrange accommodations", "done": false },
+        { "text": "Plan kid-friendly activities", "done": false }
+      ],
+      "nextAction": "Confirm trip dates with Lauren",
+      "lastActivity": null,
+      "blockers": "Need dates"
+    },
+    {
+      "id": "home-decor",
+      "title": "Home Decor",
+      "status": "planning",
+      "priority": "low",
+      "objective": "Improve home aesthetics",
+      "tasks": [
+        { "text": "Review Todoist items", "done": false },
+        { "text": "Assess scope", "done": false }
+      ],
+      "nextAction": "Pull Todoist items and prioritize",
+      "lastActivity": null,
+      "blockers": "Low priority"
+    }
+  ],
+  "modelRouting": [
+    { "emoji": "🧠", "name": "Opus 4.5", "use": "Brain: Orchestration, reasoning, decisions" },
+    { "emoji": "💻", "name": "CodeX 5.2", "use": "Coder: All coding tasks" },
+    { "emoji": "🔍", "name": "Gemini", "use": "Researcher: Web research" },
+    { "emoji": "🐦", "name": "Grok", "use": "Social: Twitter/X research" }
+  ]
+}
